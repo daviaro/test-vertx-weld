@@ -34,7 +34,7 @@ public class App extends AbstractVerticle
                         System.out.println(websocket.headers().size());
                         for (String id : listID) {
                             if (!id.equals(websocket.textHandlerID())) {
-                                vertx.eventBus().send(id, buffer.toString());
+                                vertx.eventBus().send(id, service.getNombre());
                             }
                         }
                     });
@@ -43,12 +43,12 @@ public class App extends AbstractVerticle
                                 System.out.println("list size "+listID.size());
                             }
                     );
-                    /*System.out.println(config().getInteger("tiempo.render", 5000));
+                    /*System.out.println(config().getInteger("tiempo.render", 5000));*/
                     vertx.setPeriodic(config().getInteger("tiempo.render", 5000), id2 -> {
                         for (String id : listID) {
-                            vertx.eventBus().send(id, String.valueOf(Math.random()));
+                            vertx.eventBus().send(id,service.getNombre());
                         }
-                    });*/
+                    });
                 }
         ).requestHandler(req -> {
             if (req.uri().equals("/")) req.response().sendFile("ws.html");
